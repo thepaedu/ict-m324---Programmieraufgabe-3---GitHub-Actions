@@ -1,0 +1,30 @@
+name: Code Quality Checks
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  code-lint-format-test-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18.x'
+
+      - name: Install Project Dependencies
+        run: npm ci
+
+      - name: Run Linter
+        run: npm run lint
+
+      - name: Run Formatter Check
+        run: npm run format-check
+
+      - name: Run Tests
+        run: npm test
